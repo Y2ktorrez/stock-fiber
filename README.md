@@ -69,39 +69,6 @@ DB_PORT=5432
 
 ---
 
-## 📡 Endpoints de la API
-
-### 🔍 Obtener todo el stock
-```http
-GET /api/v1/items
-```
-
-### ➕ Crear nuevo ítem
-```http
-POST /api/v1/items
-Content-Type: application/json
-```
-```json
-{
-  "product_id": "PROD-001",
-  "quantity": 50,
-  "location": "warehouse-a"
-}
-```
-
-### 🔄 Actualizar stock
-```http
-PUT /api/v1/items/:id
-Content-Type: application/json
-```
-```json
-{
-  "quantity": 25
-}
-```
-
----
-
 ## 🛠 Desarrollo Local
 
 ### 📌 Iniciar solo la base de datos:
@@ -119,20 +86,3 @@ air -c .air.toml
 go test -v ./...
 ```
 
----
-
-## 📊 Health Check del Sistema
-
-Verificar estado de los servicios:
-```bash
-curl http://localhost:8000/health
-```
-
-Respuesta esperada:
-```json
-{
-  "status": "OK",
-  "db_status": "Connected",
-  "timestamp": "2024-02-20T12:34:56Z"
-}
-```
