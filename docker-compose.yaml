@@ -1,0 +1,40 @@
+services:
+  stock_go_app:
+    container_name: stock_go_app
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      stock_go_db:
+        condition: service_healthy
+    environment:
+      - PORT=8000
+      - DB_HOST=stock_go_db
+      - DB_USER=y2k  
+      - DB_PASS=root
+      - DB_NAME=stock
+      - DB_PORT=5432
+    volumes:
+      - .:/app
+    command: sh -c "go run ./cmd/main.go"
+
+  stock_go_db:
+    image: postgres
+    container_name: stock_go_db
+    restart: always
+    environment:
+      - POSTGRES_DB=stock
+      - POSTGRES_USER=y2k
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U y2k -d stock"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
