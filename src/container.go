@@ -15,6 +15,10 @@ type Container struct {
 	ProductRepo    *repository.ProductRepository
 	ProductService *services.ProductService
 	ProductHandler *handlers.ProductHandler
+
+	MovimentRepo    *repository.MovimentRepository
+	MovimentService *services.MovimentService
+	MovimentHandler *handlers.MovimentHandler
 }
 
 func SetupContainer() *Container {
@@ -29,6 +33,11 @@ func SetupContainer() *Container {
 	productService := services.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
+	//Moviments
+	movimentRepo := repository.NewMovimentRepository(config.DB)
+	movimentService := services.NewMovimentService(movimentRepo)
+	movimentHandler := handlers.NewMovimentHandler(movimentService)
+
 	return &Container{
 		//Users
 		UserRepo:    userRepo,
@@ -39,6 +48,11 @@ func SetupContainer() *Container {
 		ProductRepo:    productRepo,
 		ProductService: productService,
 		ProductHandler: productHandler,
+
+		//Moviments
+		MovimentRepo:    movimentRepo,
+		MovimentService: movimentService,
+		MovimentHandler: movimentHandler,
 	}
 
 }
